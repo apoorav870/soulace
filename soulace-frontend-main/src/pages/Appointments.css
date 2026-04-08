@@ -1,0 +1,185 @@
+.appointments-page {
+  padding: 40px 0;
+  min-height: calc(100vh - 80px);
+  background: var(--bg-secondary);
+}
+
+.appointments-header {
+  text-align: center;
+  margin-bottom: 50px;
+}
+
+.appointments-header h1 {
+  font-size: 2.5rem;
+  margin-bottom: 10px;
+  color: var(--text-primary);
+}
+
+.appointments-header p {
+  font-size: 1.1rem;
+  color: var(--text-secondary);
+}
+
+.appointments-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.appointment-card {
+  padding: 30px;
+}
+
+.appointment-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 20px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.appointment-header h3 {
+  font-size: 1.5rem;
+  margin-bottom: 5px;
+  color: var(--text-primary);
+}
+
+.appointment-specialization {
+  color: var(--primary-color);
+  font-weight: 500;
+}
+
+.status-badge {
+  padding: 6px 12px;
+  border-radius: 12px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  text-transform: capitalize;
+}
+
+.status-pending {
+  background: rgba(254, 228, 64, 0.2);
+  color: var(--accent-color);
+}
+
+.status-confirmed {
+  background: rgba(0, 187, 249, 0.2);
+  color: var(--secondary-color);
+}
+
+.status-completed {
+  background: rgba(16, 185, 129, 0.2);
+  color: var(--success-color);
+}
+
+.status-cancelled {
+  background: rgba(239, 68, 68, 0.2);
+  color: var(--error-color);
+}
+
+.status-rejected {
+  background: rgba(239, 68, 68, 0.2);
+  color: var(--error-color);
+}
+
+.status-rejected {
+  background: rgba(239, 68, 68, 0.2);
+  color: var(--error-color);
+}
+
+.appointment-details {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  margin-bottom: 20px;
+}
+
+.detail-item {
+  display: flex;
+  gap: 10px;
+}
+
+.detail-label {
+  font-weight: 600;
+  color: var(--text-secondary);
+  min-width: 100px;
+}
+
+.detail-value {
+  color: var(--text-primary);
+}
+
+.appointment-rating {
+  padding: 15px;
+  background: var(--bg-accent);
+  border-radius: 8px;
+  margin-top: 20px;
+}
+
+.rating-display {
+  font-size: 1.2rem;
+}
+
+.review-text {
+  margin-top: 10px;
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+
+.no-appointments {
+  text-align: center;
+  padding: 60px 20px;
+}
+
+.no-appointments p {
+  font-size: 1.2rem;
+  color: var(--text-secondary);
+  margin-bottom: 30px;
+}
+
+.loading {
+  text-align: center;
+  padding: 60px 20px;
+  color: var(--text-secondary);
+  font-size: 1.2rem;
+}
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 20px;
+}
+
+.modal-content {
+  max-width: 500px;
+  width: 100%;
+  padding: 40px;
+}
+
+.modal-content h2 {
+  margin-bottom: 30px;
+  color: var(--text-primary);
+}
+
+.modal-actions {
+  display: flex;
+  gap: 15px;
+  justify-content: flex-end;
+  margin-top: 30px;
+}
+
+.modal-actions .btn {
+  min-width: 120px;
+}
+

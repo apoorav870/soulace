@@ -1,0 +1,104 @@
+.dashboard {
+  padding: 40px 0;
+  min-height: calc(100vh - 80px);
+  background: var(--bg-secondary);
+}
+
+.dashboard-header {
+  text-align: center;
+  margin-bottom: 50px;
+}
+
+.dashboard-header h1 {
+  font-size: 2.5rem;
+  margin-bottom: 10px;
+  color: var(--text-primary);
+}
+
+.dashboard-header p {
+  font-size: 1.2rem;
+  color: var(--text-secondary);
+}
+
+.dashboard-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 30px;
+  margin-bottom: 60px;
+}
+
+.stat-card {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding: 30px;
+  position: relative;
+}
+
+.stat-icon {
+  font-size: 3rem;
+}
+
+.stat-info h3 {
+  font-size: 2rem;
+  color: var(--primary-color);
+  margin-bottom: 5px;
+}
+
+.stat-info p {
+  color: var(--text-secondary);
+}
+
+.stat-link {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  color: var(--primary-color);
+  font-weight: 500;
+  font-size: 0.9rem;
+}
+
+.stat-link:hover {
+  text-decoration: underline;
+}
+
+.dashboard-actions h2 {
+  font-size: 2rem;
+  margin-bottom: 30px;
+  color: var(--text-primary);
+}
+
+.action-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 30px;
+}
+
+.action-card {
+  text-align: center;
+  padding: 40px 30px;
+  transition: transform 0.3s ease;
+  display: block;
+  color: inherit;
+}
+
+.action-card:hover {
+  transform: translateY(-5px);
+}
+
+.action-icon {
+  font-size: 4rem;
+  margin-bottom: 20px;
+}
+
+.action-card h3 {
+  font-size: 1.5rem;
+  margin-bottom: 15px;
+  color: var(--text-primary);
+}
+
+.action-card p {
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+

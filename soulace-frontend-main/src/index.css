@@ -1,0 +1,55 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --primary-color: #9B5DE5;
+  --primary-dark: #7B3DD5;
+  --secondary-color: #00BBF9;
+  --accent-color: #FEE440;
+  --text-primary: #E5E5E5;
+  --text-secondary: #9E9E9E;
+  --bg-primary: #0E0E11;
+  --bg-secondary: #1A1A1E;
+  --bg-accent: #25252A;
+  --border-color: #2A2A2E;
+  --success-color: #10b981;
+  --error-color: #ef4444;
+  --warning-color: #FEE440;
+}
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  color: var(--text-primary);
+  background-color: var(--bg-primary);
+  line-height: 1.6;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+  border: none;
+  outline: none;
+}
+
+input, textarea {
+  font-family: inherit;
+  outline: none;
+}
+
