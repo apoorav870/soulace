@@ -15,6 +15,18 @@ const Store = () => {
       maximumFractionDigits: 0
     }).format(Number(amount || 0))
 
+  const handlePurchase = (product) => {
+    const directLink = product.type === 'audiobook' ? product.audioUrl : product.pdfUrl
+
+    if (directLink) {
+      window.open(directLink, '_blank', 'noopener,noreferrer')
+      return
+    }
+
+    const query = encodeURIComponent(`${product.title} ${product.author} buy India`)
+    window.open(`https://www.google.com/search?q=${query}`, '_blank', 'noopener,noreferrer')
+  }
+
   useEffect(() => {
     fetchProducts()
   }, [filter])
@@ -120,7 +132,12 @@ const Store = () => {
                 </div>
                 <div className="product-footer">
                   <div className="product-price">{formatINR(product.price)}</div>
-                  <button className="btn btn-primary">Purchase</button>
+                  <button
+                    className="btn btn-primary"
+                    onClick={() => handlePurchase(product)}
+                  >
+                    Purchase
+                  </button>
                 </div>
               </div>
             </div>
