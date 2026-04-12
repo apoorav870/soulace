@@ -19,14 +19,14 @@ const Dashboard = () => {
 
   const fetchStats = async () => {
     try {
-      const [appointmentsRes, chatRes] = await Promise.all([
+      const [appointmentsRes, conversationsRes] = await Promise.all([
         axios.get(`${API_BASE_URL}/api/appointments`),
-        axios.get(`${API_BASE_URL}/api/chat`)
+        axios.get(`${API_BASE_URL}/api/chat/conversations`)
       ])
       
       setStats({
         appointments: appointmentsRes.data.length,
-        chatMessages: chatRes.data.length,
+        chatMessages: conversationsRes.data.length,
         activeChatRooms: 0
       })
     } catch (error) {
@@ -105,4 +105,3 @@ const Dashboard = () => {
 }
 
 export default Dashboard
-
