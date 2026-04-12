@@ -8,6 +8,13 @@ const Store = () => {
   const [loading, setLoading] = useState(true)
   const [filter, setFilter] = useState({ type: '', category: '' })
 
+  const formatINR = (amount) =>
+    new Intl.NumberFormat('en-IN', {
+      style: 'currency',
+      currency: 'INR',
+      maximumFractionDigits: 0
+    }).format(Number(amount || 0))
+
   useEffect(() => {
     fetchProducts()
   }, [filter])
@@ -112,7 +119,7 @@ const Store = () => {
                   <span className="category-value">{product.category}</span>
                 </div>
                 <div className="product-footer">
-                  <div className="product-price">${product.price}</div>
+                  <div className="product-price">{formatINR(product.price)}</div>
                   <button className="btn btn-primary">Purchase</button>
                 </div>
               </div>
@@ -133,4 +140,3 @@ const Store = () => {
 }
 
 export default Store
-
