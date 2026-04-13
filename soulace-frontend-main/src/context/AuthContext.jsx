@@ -38,9 +38,13 @@ export const AuthProvider = ({ children }) => {
     }
   }
 
-  const login = async (email, password) => {
+  const login = async (email, password, captchaToken) => {
     try {
-      const response = await axios.post(`${API_BASE_URL}/api/auth/login`, { email, password })
+      const response = await axios.post(`${API_BASE_URL}/api/auth/login`, {
+        email,
+        password,
+        captchaToken
+      })
       const { token: newToken, user: userData } = response.data
       setToken(newToken)
       setUser(userData)
@@ -90,4 +94,3 @@ export const AuthProvider = ({ children }) => {
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>
 }
-

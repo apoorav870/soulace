@@ -12,6 +12,41 @@ const generateToken = (userId) => {
   });
 };
 
+const verifyTurnstileToken = async (token, remoteip) => {
+  const secret = process.env.TURNSTILE_SECRET_KEY;
+
+  // Keep local/dev login working when Turnstile secret is not configured.
+  if (!secret) return { success: true, skipped: true };
+  if (!token) return { success: false };
+
+  try {
+    const body = new URLSearchParams({
+      secret,
+      response: token
+    });
+
+    if (remoteip) {
+      body.append('remoteip', remoteip);
+    }
+
+    const response = await fetch('https://challenges.cloudflare.com/turnstile/v0/siteverify', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded'
+      },
+      body
+    });
+
+    if (!response.ok) return { success: false };
+
+    const result = await response.json();
+    return { success: !!result.success };
+  } catch (error) {
+    console.error('Turnstile verification error:', error);
+    return { success: false };
+  }
+};
+
 // @route   POST /api/auth/register
 // @desc    Register a new user
 // @access  Public
@@ -75,7 +110,8 @@ router.post('/register', [
 // @access  Public
 router.post('/login', [
   body('email').isEmail().withMessage('Please provide a valid email'),
-  body('password').notEmpty().withMessage('Password is required')
+  body('password').notEmpty().withMessage('Password is required'),
+  body('captchaToken').optional().isString()
 ], async (req, res) => {
   try {
     const errors = validationResult(req);
@@ -83,7 +119,12 @@ router.post('/login', [
       return res.status(400).json({ errors: errors.array() });
     }
 
-    const { email, password } = req.body;
+    const { email, password, captchaToken } = req.body;
+
+    const captchaResult = await verifyTurnstileToken(captchaToken, req.ip);
+    if (!captchaResult.success) {
+      return res.status(400).json({ message: 'CAPTCHA verification failed. Please try again.' });
+    }
 
     // Find user
     const user = await User.findOne({ email });
@@ -128,4 +169,3 @@ router.get('/me', auth, async (req, res) => {
 });
 
 module.exports = router;
-

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { useNavigate, Link } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
 import './Auth.css'
@@ -7,8 +7,48 @@ const Login = () => {
   const [formData, setFormData] = useState({ email: '', password: '' })
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
+  const [captchaToken, setCaptchaToken] = useState('')
   const { login } = useAuth()
   const navigate = useNavigate()
+  const captchaContainerRef = useRef(null)
+  const captchaWidgetIdRef = useRef(null)
+  const turnstileSiteKey = import.meta.env.VITE_TURNSTILE_SITE_KEY || ''
+  const captchaEnabled = Boolean(turnstileSiteKey)
+
+  useEffect(() => {
+    if (!captchaEnabled) return
+
+    const renderCaptcha = () => {
+      if (!window.turnstile || !captchaContainerRef.current || captchaWidgetIdRef.current !== null) return
+
+      captchaWidgetIdRef.current = window.turnstile.render(captchaContainerRef.current, {
+        sitekey: turnstileSiteKey,
+        theme: 'dark',
+        callback: (token) => setCaptchaToken(token),
+        'expired-callback': () => setCaptchaToken(''),
+        'error-callback': () => setCaptchaToken('')
+      })
+    }
+
+    if (window.turnstile) {
+      renderCaptcha()
+      return
+    }
+
+    const existing = document.querySelector('script[data-turnstile="true"]')
+    if (existing) {
+      existing.addEventListener('load', renderCaptcha, { once: true })
+      return
+    }
+
+    const script = document.createElement('script')
+    script.src = 'https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit'
+    script.async = true
+    script.defer = true
+    script.dataset.turnstile = 'true'
+    script.onload = renderCaptcha
+    document.head.appendChild(script)
+  }, [captchaEnabled, turnstileSiteKey])
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value })
@@ -20,7 +60,17 @@ const Login = () => {
     setError('')
     setLoading(true)
 
-    const result = await login(formData.email, formData.password)
+    if (captchaEnabled && !captchaToken) {
+      setError('Please complete CAPTCHA verification')
+      setLoading(false)
+      return
+    }
+
+    const result = await login(
+      formData.email,
+      formData.password,
+      captchaEnabled ? captchaToken : undefined
+    )
     
     if (result.success) {
       // Redirect based on user role
@@ -34,6 +84,10 @@ const Login = () => {
       }
     } else {
       setError(result.message)
+      if (captchaEnabled && window.turnstile && captchaWidgetIdRef.current !== null) {
+        window.turnstile.reset(captchaWidgetIdRef.current)
+        setCaptchaToken('')
+      }
     }
     
     setLoading(false)
@@ -75,6 +129,13 @@ const Login = () => {
               />
             </div>
 
+            {captchaEnabled && (
+              <div className="input-group">
+                <label>Verification</label>
+                <div ref={captchaContainerRef}></div>
+              </div>
+            )}
+
             <button type="submit" className="btn btn-primary btn-large" disabled={loading}>
               {loading ? 'Signing in...' : 'Sign In'}
             </button>
@@ -90,4 +151,3 @@ const Login = () => {
 }
 
 export default Login
-

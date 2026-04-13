@@ -26,6 +26,7 @@ MONGODB_URI=your_mongodb_connection_string
 JWT_SECRET=your_secure_jwt_secret
 CLIENT_URL=http://localhost:3000
 GROQ_API_KEY=your_groq_api_key
+TURNSTILE_SECRET_KEY=your_cloudflare_turnstile_secret_key
 ```
 
 `GROQ_API_KEY` is optional for startup. If it is not set, chatbot responses use a fallback message instead of calling Groq.
@@ -59,6 +60,7 @@ Create a `.env` file in `soulace-frontend-main`:
 
 ```env
 VITE_API_BASE_URL=http://localhost:5001
+VITE_TURNSTILE_SITE_KEY=your_cloudflare_turnstile_site_key
 ```
 
 Run the frontend:
